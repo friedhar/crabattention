@@ -1,1 +1,3 @@
-# rustyattention - Bare Bones Attention Implementations 
+# Crabattention - Multi-Flavour Attention Implementations In Rust
+
+
