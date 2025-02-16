@@ -8,4 +8,4 @@ name = "crabattention"
 path = "src/lib.rs"
 
 [dependencies]
-faer = "=0.19.4"
+ndarray = "=0.15.6"
