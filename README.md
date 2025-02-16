@@ -8,6 +8,7 @@ Currently, the only supported target device is plain ol' CPU LLIR.
 
 ## (Semi-Scientific) Benchmarks
 > NOTE: The benchmarks we're done on a standard work machine, a M4 Macbok Pro. results obviously have high beta to varying hardware.
+> NOTE: CrabAttention doesn't necessiraly aim to be as fast / faster than SOTA implementations like `FlashAttention`..
 ```
 Model Name:	                    MacBook Pro
 Model Identifier:	              Mac16,1
