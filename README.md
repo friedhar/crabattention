@@ -6,8 +6,10 @@ The Library provides optimized implementations of various Attention Algorithms, 
 
 Currently, the only supported target device is plain ol' CPU LLIR. 
 
+## (Semi-Scientific) Benchmarks
+> NOTE: The benchmarks we're done on a standard work machine, a M4 Macbok Pro. varying hardware obviously has high beta to the results.
 
 
-
+-----
 Crabattention is a WIP. contributions are welcome.
 
