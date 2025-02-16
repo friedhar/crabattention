@@ -1,1 +1,1 @@
-pub mod naive_cpu;
+pub mod naive_cpu_slow;

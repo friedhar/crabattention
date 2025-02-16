@@ -69,7 +69,7 @@ fn transpose(matrix: &[Vec<f32>]) -> Vec<Vec<f32>> {
 mod tests {
     use std::{hint::black_box, time::Instant};
 
-    use crate::naive_cpu::{causal_attention, transpose};
+    use crate::naive_cpu_slow::{causal_attention, transpose};
 
     #[test]
     fn t0() {
