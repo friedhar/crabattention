@@ -1,6 +1,6 @@
 use ndarray::Array2;
 
-pub fn causal_attention(q: &Array2<f32>, k: &Array2<f32>, v: &Array2<f32>) -> Array2<f32> {
+pub fn cross_attention(q: &Array2<f32>, k: &Array2<f32>, v: &Array2<f32>) -> Array2<f32> {
     let d_k = q.shape()[1] as f32;
     let mut scores = q.dot(&k.t()) / d_k.sqrt();
 

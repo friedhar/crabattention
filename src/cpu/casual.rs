@@ -34,10 +34,7 @@ pub fn causal_attention(q: &Array2<f32>, k: &Array2<f32>, v: &Array2<f32>) -> Ar
 
 #[cfg(test)]
 mod tests {
-
-    use ndarray::{iter::Windows, Array0, Array1, Array2, ArrayView1};
-
-    use crate::casual_attention_cpu;
+    use crate::cpu::casual::causal_attention;
 
     #[test]
     fn test0() {
@@ -46,7 +43,7 @@ mod tests {
         let k = q.clone();
         let v = q.clone();
 
-        let output = casual_attention_cpu::causal_attention(&q, &k, &v);
+        let output = causal_attention(&q, &k, &v);
         println!("Causal attention output:\n{:.2}", output);
     }
 }
