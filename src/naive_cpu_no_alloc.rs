@@ -1,4 +1,4 @@
-fn matmul(a: &[Vec<f32>], b: &[Vec<f32>]) -> Vec<Vec<f32>> {
+fn matmul(a: &[&[f32]], b: &[&[f32]]) -> Vec<Vec<f32>> {
     let rows = a.len();
     let cols = b[0].len();
     let common = b.len();
@@ -14,7 +14,7 @@ fn matmul(a: &[Vec<f32>], b: &[Vec<f32>]) -> Vec<Vec<f32>> {
     result
 }
 
-fn softmax(scores: &mut Vec<Vec<f32>>) {
+fn softmax(scores: &mut [&mut [f32]]) {
     for row in scores.iter_mut() {
         let max_val = row.iter().copied().fold(f32::NEG_INFINITY, f32::max);
         let exps: Vec<f32> = row.iter().map(|&x| (x - max_val).exp()).collect();
@@ -25,7 +25,7 @@ fn softmax(scores: &mut Vec<Vec<f32>>) {
     }
 }
 
-fn causal_attention(q: &[Vec<f32>], k: &[Vec<f32>], v: &[Vec<f32>]) -> Vec<Vec<f32>> {
+fn causal_attention(q: &[&[f32]], k: &[&[f32]], v: &[&[f32]]) -> Vec<Vec<f32>> {
     let scale = (k.len() as f32).sqrt().recip(); // 1/sqrt(d_k)
     let mut scores = matmul(q, &transpose(k)); // Q @ K^T
 
@@ -43,7 +43,7 @@ fn causal_attention(q: &[Vec<f32>], k: &[Vec<f32>], v: &[Vec<f32>]) -> Vec<Vec<f
     matmul(&scores, v)
 }
 
-fn transpose(matrix: &[Vec<f32>]) -> Vec<Vec<f32>> {
+fn transpose(matrix: &[&[f32]]) -> Vec<Vec<f32>> {
     if matrix.is_empty() || matrix[0].is_empty() {
         return vec![];
     }
@@ -69,13 +69,13 @@ fn transpose(matrix: &[Vec<f32>]) -> Vec<Vec<f32>> {
 mod tests {
     use std::{hint::black_box, time::Instant};
 
-    use crate::naive_cpu::{causal_attention, transpose};
+    use crate::naive_cpu_no_alloc::{causal_attention, transpose};
 
     #[test]
     fn t0() {
-        let q = vec![vec![0.1, 0.2], vec![0.3, 0.4], vec![0.5, 0.6]];
-        let k = vec![vec![0.2, 0.1], vec![0.4, 0.3], vec![0.6, 0.5]];
-        let v = vec![vec![1.0, 2.0], vec![3.0, 4.0], vec![5.0, 6.0]];
+        let q: &[&[f32]] = &[&[0.1, 0.2], &[0.3, 0.4], &[0.5, 0.6]];
+        let k: &[&[f32]] = &[&[0.2, 0.1], &[0.4, 0.3], &[0.6, 0.5]];
+        let v: &[&[f32]] = &[&[1.0, 2.0], &[3.0, 4.0], &[5.0, 6.0]];
 
         let output = causal_attention(&q, &k, &v);
 
@@ -87,9 +87,9 @@ mod tests {
 
     #[test]
     fn benchmark_naive_cpu_constant_size() {
-        let q = vec![vec![0.1, 0.2], vec![0.3, 0.4], vec![0.5, 0.6]];
-        let k = vec![vec![0.2, 0.1], vec![0.4, 0.3], vec![0.6, 0.5]];
-        let v = vec![vec![1.0, 2.0], vec![3.0, 4.0], vec![5.0, 6.0]];
+        let q: &[&[f32]] = &[&[0.1, 0.2], &[0.3, 0.4], &[0.5, 0.6]];
+        let k: &[&[f32]] = &[&[0.2, 0.1], &[0.4, 0.3], &[0.6, 0.5]];
+        let v: &[&[f32]] = &[&[1.0, 2.0], &[3.0, 4.0], &[5.0, 6.0]];
 
         let mut s_t = Instant::now();
         let n = 33_554_432; // 2^20
