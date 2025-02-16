@@ -27,7 +27,7 @@ fn softmax(scores: &mut Vec<Vec<f32>>) {
 
 fn causal_attention(q: &[Vec<f32>], k: &[Vec<f32>], v: &[Vec<f32>]) -> Vec<Vec<f32>> {
     let scale = (k.len() as f32).sqrt().recip(); // 1/sqrt(d_k)
-    let mut scores = matmul(q, k); // Q @ K^T
+    let mut scores = matmul(q, &transpose(k)); // Q @ K^T
 
     let n = scores.len();
     for i in 0..n {
@@ -75,7 +75,7 @@ mod tests {
         let k = vec![vec![0.2, 0.1], vec![0.4, 0.3], vec![0.6, 0.5]];
         let v = vec![vec![1.0, 2.0], vec![3.0, 4.0], vec![5.0, 6.0]];
 
-        let output = causal_attention(&q, &transpose(&k), &v);
+        let output = causal_attention(&q, &k, &v);
 
         println!("Output:");
         for row in &output {
