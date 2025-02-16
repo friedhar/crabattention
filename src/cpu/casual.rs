@@ -1,6 +1,6 @@
-// ref: Attention(Q, K, V) = softmax(QK^T/sqrt(d_k))V
-
 use ndarray::{Array, Array2, IntoDimension};
+
+// ref: Attention(Q, K, V) = softmax(QK^T/sqrt(d_k))V
 
 // ref: softmax(x) =
 // 1.      find max(x)
