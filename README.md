@@ -6,6 +6,11 @@ The Library provides optimized implementations of various Attention Algorithms, 
 
 Currently, the only supported target device is plain ol' CPU LLIR. 
 
+## Flavours
+* Self Attention
+* Casual Attention
+* Cross Attention
+
 ## (Semi-Scientific) Benchmarks
 > NOTE: The benchmarks we're done on a standard work machine, a M4 Macbok Pro. results obviously have high beta to varying hardware.
 
